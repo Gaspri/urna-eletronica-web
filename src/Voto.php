@@ -12,5 +12,3 @@ class Voto
     ) {}
 }
 
-$voto = new Voto(1, 0, 0,false, '0000-00-00');
-var_dump($voto);
