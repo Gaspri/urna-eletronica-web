@@ -1,5 +1,6 @@
 <?php
-require_once "../config.php";
+require_once __DIR__ . "/../config.php";
+
 
 $dsn = "mysql:host=localhost;dbname=urna_eletronica;charset=utf8mb4";
 $usuario = $user;
