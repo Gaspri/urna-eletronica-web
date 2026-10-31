@@ -13,3 +13,23 @@ Abri o VS Code, criei a pasta database, fiz a exportação personalizada do banc
 Hoje fiz a conexão pdo ao banco de dados, e passeis umas regras pra não ocorrer slq injection
 Criei tbm um .gitignore e passei todas as configurações restritas do site.
 --Amanha pretenddo criar todas as classes que viu utilizar no código e instaciar elas, pra podermos fazer algumas manipulações
+
+
+Diário da Urna Eletrônica: 31/10/2026
+
+O que fiz hoje
+
+Retomei o JavaScript da tela da urna do zero, em partes pequenas, depois de um tempo sem mexer no projeto.
+Corrigi sozinho o seletor dos botões: usei querySelectorAll('.numeros') para pegar só os botões numéricos e entendi por que o forEach funciona com NodeList. Troquei o seletor dos spans para .digito.
+Criei o botão corrige: um clique zera o contador, esvazia todos os dígitos com forEach e zera o número guardado. Funciona com qualquer quantidade de spans.
+Criei o gatilho de fim da digitação, que compara o contador com o total de spans em vez de usar um número fixo.
+Criei a variável numero (string), que junta os dígitos digitados em um número só (ex.: “1” e “2” viram “12”).
+Fiz commits e push da tela, do corrige e da junção dos números. Último commit: 8494120.
+
+O que aprendi
+
+Diferença entre HTMLCollection e NodeList, e por que só um tem forEach.
+Escopo de variáveis e o cuidado com nomes de parâmetros em forEach aninhados.
+A diferença entre == e ===, e que o contador (um número) não tem length, mas a lista digito tem.
+Que o estado da urna tem três partes (spans, contador e número), e o corrige precisa resetar as três.
+Como usar git add só de arquivos específicos e ler o git status antes de commitar.
