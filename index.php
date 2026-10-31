@@ -37,7 +37,7 @@
     <input class="numeros" type="button" value="9" />
     <input class="numeros" type="button" value="0" />
     <input type="button" value="BRANCO" />
-    <input type="button" value="CORRIGE" />
+    <input class="corrige" type="button" value="CORRIGE" />
     <input type="button" value="CONFIRMA" />
   </div>
 </div>
