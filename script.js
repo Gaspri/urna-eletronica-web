@@ -3,8 +3,10 @@ const corrige = document.querySelectorAll(".btn-corrige");
 const digito = document.querySelectorAll(".digito");
 const nome = document.getElementById("nome-candidato");
 const partido = document.getElementById("partido-candidato");
-const detalhes = document.querySelector(".detalhes-candidato");
-const detalhesErrado = document.querySelector(".detalhes-errado");
+const detalhesOculto = document.querySelector(".detalhes-candidato");
+const detalhesErradoOculto = document.querySelector(".detalhes-errado");
+const ocultoFoto = document.querySelector(".foto-candidato");
+const foto = document.querySelector(".img-candidato");
 
 let numero = "";
 
@@ -25,11 +27,13 @@ button.forEach((element) => {
           })
           .then((candidato) => {
             if (candidato.status === "erro") {
-              detalhesErrado.classList.remove("oculto");
+              detalhesErradoOculto.classList.remove("oculto");
             } else {
               nome.textContent = candidato.nome;
               partido.textContent = candidato.partido;
-              detalhes.classList.remove("oculto");
+              foto.src = "assets/" + candidato.foto;
+              ocultoFoto.classList.remove("oculto");
+              detalhesOculto.classList.remove("oculto");
             }
           })
           .catch((erro) => {
@@ -44,8 +48,9 @@ corrige.forEach((element) => {
   element.addEventListener("click", () => {
     contador = 0;
     numero = "";
-    detalhes.classList.add("oculto");
-    detalhesErrado.classList.add("oculto");
+    detalhesOculto.classList.add("oculto");
+    detalhesErradoOculto.classList.add("oculto");
+    ocultoFoto.classList.add("oculto");
     digito.forEach((span) => {
       span.innerHTML = "";
     });

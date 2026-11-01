@@ -33,11 +33,11 @@
           <p class="numero-errado">Número Errado</p>
           <p class="voto-nulo">Voto Nulo</p>
         </div>
-        
+
       </div>
 
       <div class="foto-candidato oculto">
-        <!-- Imagem do candidato renderizada dinamicamente -->
+       <img class="img-candidato" src="" alt=""> <!-- Imagem do candidato renderizada dinamicamente -->
       </div>
     </div>
 
