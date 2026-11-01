@@ -1,6 +1,11 @@
 const button = document.querySelectorAll(".numeros"); //
-const corrige = document.querySelectorAll(".corrige");
+const corrige = document.querySelectorAll(".btn-corrige");
 const digito = document.querySelectorAll(".digito");
+const nome = document.getElementById("nome-candidato");
+const partido = document.getElementById("partido-candidato");
+const detalhes = document.querySelector(".detalhes-candidato");
+const detalhesErrado = document.querySelector(".detalhes-errado");
+
 let numero = "";
 
 let contador = 0;
@@ -14,14 +19,18 @@ button.forEach((element) => {
       if (digito.length === contador) {
         // VERIFICAÇÃO SE JÁ DIGITOU O NUMERO CERTO
 
-        fetch(
-          `http://localhost/urna%20Eletronica/buscar_candidato.php?numero=${numero}`,
-        )
+        fetch(`buscar_candidato.php?numero=${numero}`)
           .then((mensagemSucesso) => {
             return mensagemSucesso.json();
           })
-          .then((mensagemSucesso) => {
-            console.log(mensagemSucesso);
+          .then((candidato) => {
+            if (candidato.status === "erro") {
+              detalhesErrado.classList.remove("oculto");
+            } else {
+              nome.textContent = candidato.nome;
+              partido.textContent = candidato.partido;
+              detalhes.classList.remove("oculto");
+            }
           })
           .catch((erro) => {
             console.log(erro);
@@ -35,6 +44,8 @@ corrige.forEach((element) => {
   element.addEventListener("click", () => {
     contador = 0;
     numero = "";
+    detalhes.classList.add("oculto");
+    detalhesErrado.classList.add("oculto");
     digito.forEach((span) => {
       span.innerHTML = "";
     });
