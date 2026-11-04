@@ -1,11 +1,11 @@
-const button = document.querySelectorAll(".numeros"); //
+const button = document.querySelectorAll(".numeros");
 const corrige = document.querySelectorAll(".btn-corrige");
 const digito = document.querySelectorAll(".digito");
 const nome = document.getElementById("nome-candidato");
 const partido = document.getElementById("partido-candidato");
-const detalhesOculto = document.querySelector(".detalhes-candidato");
-const detalhesErradoOculto = document.querySelector(".detalhes-errado");
-const ocultoFoto = document.querySelector(".foto-candidato");
+const dadosCandidato = document.querySelector(".detalhes-candidato");
+const dadosNulo = document.querySelector(".detalhes-errado");
+const divFoto = document.querySelector(".foto-candidato");
 const foto = document.querySelector(".img-candidato");
 
 let numero = "";
@@ -22,18 +22,22 @@ button.forEach((element) => {
         // VERIFICAÇÃO SE JÁ DIGITOU O NUMERO CERTO
 
         fetch(`buscar_candidato.php?numero=${numero}`)
-          .then((mensagemSucesso) => {
-            return mensagemSucesso.json();
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP erro! ${response.status}`);
+            }
+            return response.json();
           })
           .then((candidato) => {
             if (candidato.status === "erro") {
-              detalhesErradoOculto.classList.remove("oculto");
+              dadosNulo.classList.remove("oculto");
             } else {
               nome.textContent = candidato.nome;
               partido.textContent = candidato.partido;
+              foto.alt = candidato.nome;
               foto.src = "assets/" + candidato.foto;
-              ocultoFoto.classList.remove("oculto");
-              detalhesOculto.classList.remove("oculto");
+
+              mostrar();
             }
           })
           .catch((erro) => {
@@ -48,11 +52,20 @@ corrige.forEach((element) => {
   element.addEventListener("click", () => {
     contador = 0;
     numero = "";
-    detalhesOculto.classList.add("oculto");
-    detalhesErradoOculto.classList.add("oculto");
-    ocultoFoto.classList.add("oculto");
+    ocultar();
     digito.forEach((span) => {
       span.innerHTML = "";
     });
   });
 });
+
+function mostrar() {
+  divFoto.classList.remove("oculto");
+  dadosCandidato.classList.remove("oculto");
+}
+
+function ocultar() {
+  dadosCandidato.classList.add("oculto");
+  dadosNulo.classList.add("oculto");
+  divFoto.classList.add("oculto");
+}
