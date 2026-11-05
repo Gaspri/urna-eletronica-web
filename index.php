@@ -22,9 +22,14 @@
         </div>
 
         <!-- Dados do Candidato (Aparecem via JS) -->
+
+        <div class="espacoErro oculto">
+
+        </div>
         <div class="detalhes-candidato oculto">
           <p class="campo-detalhe">Nome: <span id="nome-candidato"></span></p>
           <p class="campo-detalhe">Partido: <span id="partido-candidato"></span></p>
+
 
 
         </div>
@@ -37,7 +42,7 @@
       </div>
 
       <div class="foto-candidato oculto">
-       <img class="img-candidato" src="" alt=""> <!-- Imagem do candidato renderizada dinamicamente -->
+        <img class="img-candidato" src="" alt=""> <!-- Imagem do candidato renderizada dinamicamente -->
       </div>
     </div>
 

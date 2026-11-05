@@ -7,6 +7,7 @@ const dadosCandidato = document.querySelector(".detalhes-candidato");
 const dadosNulo = document.querySelector(".detalhes-errado");
 const divFoto = document.querySelector(".foto-candidato");
 const foto = document.querySelector(".img-candidato");
+const espacoErro = document.querySelector(".espacoErro");
 
 let numero = "";
 
@@ -41,7 +42,9 @@ button.forEach((element) => {
             }
           })
           .catch((erro) => {
-            console.log(erro);
+            espacoErro.classList.remove("oculto");
+            espacoErro.textContent = "Problemas Técnicos ! Verifique sua Conexão !";
+            console.log(erro)
           });
       }
     }
@@ -68,4 +71,5 @@ function ocultar() {
   dadosCandidato.classList.add("oculto");
   dadosNulo.classList.add("oculto");
   divFoto.classList.add("oculto");
+  espacoErro.classList.add("oculto")
 }
