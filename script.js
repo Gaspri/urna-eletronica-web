@@ -8,6 +8,7 @@ const dadosNulo = document.querySelector(".detalhes-errado");
 const divFoto = document.querySelector(".foto-candidato");
 const foto = document.querySelector(".img-candidato");
 const espacoErro = document.querySelector(".espacoErro");
+let controller;
 
 let numero = "";
 
@@ -19,10 +20,14 @@ button.forEach((element) => {
       numero += digito[contador].textContent; // JUNTA OS NUMEROS EM UM SÓ
       contador++;
 
+      controller = new AbortController();
+
       if (digito.length === contador) {
         // VERIFICAÇÃO SE JÁ DIGITOU O NUMERO CERTO
 
-        fetch(`buscar_candidato.php?numero=${numero}`)
+        fetch(`buscar_candidato.php?numero=${numero}`, {
+          signal: controller.signal,
+        })
           .then((response) => {
             if (!response.ok) {
               throw new Error(`HTTP erro! ${response.status}`);
@@ -37,14 +42,16 @@ button.forEach((element) => {
               partido.textContent = candidato.partido;
               foto.alt = candidato.nome;
               foto.src = "assets/" + candidato.foto;
-
               mostrar();
             }
           })
           .catch((erro) => {
-            espacoErro.classList.remove("oculto");
-            espacoErro.textContent = "Problemas Técnicos! Verifique sua Conexão!";
-            console.log(erro)
+            if (erro.name === "AbortError") {
+            } else {
+              espacoErro.classList.remove("oculto");
+              espacoErro.textContent =
+                "Problemas Técnicos! Verifique sua Conexão!";
+            }
           });
       }
     }
@@ -56,9 +63,11 @@ corrige.forEach((element) => {
     contador = 0;
     numero = "";
     ocultar();
+
     digito.forEach((span) => {
       span.innerHTML = "";
     });
+    controller.abort();
   });
 });
 
@@ -71,5 +80,5 @@ function ocultar() {
   dadosCandidato.classList.add("oculto");
   dadosNulo.classList.add("oculto");
   divFoto.classList.add("oculto");
-  espacoErro.classList.add("oculto")
+  espacoErro.classList.add("oculto");
 }
