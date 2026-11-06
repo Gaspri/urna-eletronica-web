@@ -43,7 +43,7 @@ button.forEach((element) => {
           })
           .catch((erro) => {
             espacoErro.classList.remove("oculto");
-            espacoErro.textContent = "Problemas Técnicos ! Verifique sua Conexão !";
+            espacoErro.textContent = "Problemas Técnicos! Verifique sua Conexão!";
             console.log(erro)
           });
       }
