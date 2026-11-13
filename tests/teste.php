@@ -18,8 +18,6 @@ $stmtEleitor->execute(array(
     ':cpf' => $cpf
 ));
 
-
-
 if ($stmtCandidato->rowCount() > 0) {
     $resultCandidato = $stmtCandidato->fetch(PDO::FETCH_ASSOC);
     $resultCandidato = new Candidato(...$resultCandidato);
