@@ -1,5 +1,7 @@
 const button = document.querySelectorAll(".numeros");
 const corrige = document.querySelectorAll(".btn-corrige");
+const btnBranco = document.querySelector(".btn-branco");
+const btnConfirm = document.querySelector(".btn-confirma");
 const digito = document.querySelectorAll(".digito");
 const nome = document.getElementById("nome-candidato");
 const partido = document.getElementById("partido-candidato");
@@ -8,11 +10,34 @@ const dadosNulo = document.querySelector(".detalhes-errado");
 const divFoto = document.querySelector(".foto-candidato");
 const foto = document.querySelector(".img-candidato");
 const espacoErro = document.querySelector(".espacoErro");
+const fim = document.querySelector(".display-Fim");
+const display = document.querySelector("#display");
+const audioConfirma = document.querySelector(".audio-confirma");
 let controller;
-
 let numero = "";
-
 let contador = 0;
+
+function branco() {
+  btnBranco.addEventListener("click", () => {
+    if (contador > 0) {
+      ocultar();
+      limpar();
+    }
+
+    espacoErro.classList.remove("oculto");
+    dadosNulo.classList.add("oculto");
+    espacoErro.textContent = "Voto em Branco";
+  });
+}
+
+function confirma() {
+  btnConfirm.addEventListener("click", () => {
+    fim.classList.remove("oculto");
+    display.classList.add("oculto");
+    audioConfirma.play();
+  });
+}
+
 button.forEach((element) => {
   element.addEventListener("click", () => {
     if (digito[contador]) {
@@ -54,20 +79,20 @@ button.forEach((element) => {
             }
           });
       }
+      confirma();
     }
   });
 });
 
 corrige.forEach((element) => {
   element.addEventListener("click", () => {
-    contador = 0;
-    numero = "";
     ocultar();
 
-    digito.forEach((span) => {
-      span.innerHTML = "";
-    });
-    controller.abort();
+    if (contador === 0) {
+    } else {
+      controller.abort();
+    }
+    limpar();
   });
 });
 
@@ -81,4 +106,15 @@ function ocultar() {
   dadosNulo.classList.add("oculto");
   divFoto.classList.add("oculto");
   espacoErro.classList.add("oculto");
+}
+
+branco();
+
+function limpar() {
+  contador = 0;
+  numero = "";
+
+  digito.forEach((span) => {
+    span.innerHTML = "";
+  });
 }
