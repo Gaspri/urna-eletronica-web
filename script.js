@@ -35,6 +35,7 @@ function confirma() {
     fim.classList.remove("oculto");
     display.classList.add("oculto");
     audioConfirma.play();
+    console.log("Confirma Disparou");
   });
 }
 
@@ -79,7 +80,6 @@ button.forEach((element) => {
             }
           });
       }
-      confirma();
     }
   });
 });
@@ -109,6 +109,7 @@ function ocultar() {
 }
 
 branco();
+confirma();
 
 function limpar() {
   contador = 0;

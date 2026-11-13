@@ -46,6 +46,12 @@
       </div>
     </div>
 
+    <div class="display-Fim oculto">
+      <h1>FIM</h1>
+    </div>
+
+    <audio class="audio-confirma" src="./assets/som-de-urna-eletronica/Urna Eletrônica.mp3"></audio>
+
     <!-- TECLADO -->
     <div class="container">
       <input class="numeros" type="button" value="1" />
