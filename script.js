@@ -131,12 +131,12 @@ function limpar() {
   });
 }
 
-branco();
-confirma();
-
 function abortar() {
   if (contador === 0) {
   } else {
     controller.abort();
   }
 }
+
+branco();
+confirma();
