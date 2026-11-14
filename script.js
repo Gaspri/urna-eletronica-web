@@ -57,8 +57,11 @@ ocultar();
 button.forEach((element) => {
   element.addEventListener("click", () => {
     if (digito[contador]) {
-      digito[contador].textContent = element.value;
-      numero += digito[contador].textContent; // JUNTA OS NUMEROS EM UM SÓ
+      if (voto === "branco") {
+        return;
+      }
+      digito[contador].textContent = element.value; //ESCREVE O PRIMEIRO DIGITO
+      numero += digito[contador].textContent; // JUNTA OS DIGITOS EM UM SÓ
       contador++;
       controller = new AbortController();
 
