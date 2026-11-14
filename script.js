@@ -17,6 +17,7 @@ let controller;
 let numero = "";
 let voto = "";
 let contador = 0;
+let statusVoto = false;
 
 function branco() {
   btnBranco.addEventListener("click", () => {
@@ -46,9 +47,14 @@ function confirma() {
     if (voto === "") {
       return;
     }
+    if (statusVoto) {
+      return;
+    }
+    statusVoto = true;
     fim.classList.remove("oculto");
     display.classList.add("oculto");
     audioConfirma.play();
+    console.log(statusVoto);
   });
 }
 
@@ -56,10 +62,14 @@ ocultar();
 
 button.forEach((element) => {
   element.addEventListener("click", () => {
+    if (statusVoto) {
+      return;
+    }
     if (digito[contador]) {
       if (voto === "branco") {
         return;
       }
+
       digito[contador].textContent = element.value; //ESCREVE O PRIMEIRO DIGITO
       numero += digito[contador].textContent; // JUNTA OS DIGITOS EM UM SÓ
       contador++;
@@ -106,6 +116,9 @@ button.forEach((element) => {
 
 corrige.forEach((element) => {
   element.addEventListener("click", () => {
+    if (statusVoto) {
+      return;
+    }
     ocultar();
     voto = "";
     abortar();
