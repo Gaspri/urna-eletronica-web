@@ -15,37 +15,49 @@ const display = document.querySelector("#display");
 const audioConfirma = document.querySelector(".audio-confirma");
 let controller;
 let numero = "";
+let voto = "";
 let contador = 0;
 
 function branco() {
   btnBranco.addEventListener("click", () => {
-    if (contador > 0) {
-      ocultar();
-      limpar();
-    }
-
+    voto = "branco";
+    ocultar();
+    abortar();
+    limpar();
     espacoErro.classList.remove("oculto");
     dadosNulo.classList.add("oculto");
     espacoErro.textContent = "Voto em Branco";
   });
 }
 
+function votoNulo() {
+  ocultar();
+  voto = "nulo";
+  dadosNulo.classList.remove("oculto");
+}
+
 function confirma() {
   btnConfirm.addEventListener("click", () => {
+    if (voto === "invalido") {
+      return;
+    }
+    if (voto === "") {
+      return;
+    }
     fim.classList.remove("oculto");
     display.classList.add("oculto");
     audioConfirma.play();
-    console.log("Confirma Disparou");
   });
 }
+
+ocultar();
 
 button.forEach((element) => {
   element.addEventListener("click", () => {
     if (digito[contador]) {
-      digito[contador].innerHTML = element.value;
+      digito[contador].textContent = element.value;
       numero += digito[contador].textContent; // JUNTA OS NUMEROS EM UM SÓ
       contador++;
-
       controller = new AbortController();
 
       if (digito.length === contador) {
@@ -62,12 +74,13 @@ button.forEach((element) => {
           })
           .then((candidato) => {
             if (candidato.status === "erro") {
-              dadosNulo.classList.remove("oculto");
+              votoNulo();
             } else {
               nome.textContent = candidato.nome;
               partido.textContent = candidato.partido;
               foto.alt = candidato.nome;
               foto.src = "assets/" + candidato.foto;
+              voto = "valido";
               mostrar();
             }
           })
@@ -79,6 +92,8 @@ button.forEach((element) => {
                 "Problemas Técnicos! Verifique sua Conexão!";
             }
           });
+      } else if (digito.length !== contador) {
+        voto = "invalido";
       }
     }
   });
@@ -87,29 +102,25 @@ button.forEach((element) => {
 corrige.forEach((element) => {
   element.addEventListener("click", () => {
     ocultar();
-
-    if (contador === 0) {
-    } else {
-      controller.abort();
-    }
+    voto = "";
+    abortar();
     limpar();
   });
 });
 
 function mostrar() {
+  //REMOVE OCULTO
   divFoto.classList.remove("oculto");
   dadosCandidato.classList.remove("oculto");
 }
 
 function ocultar() {
+  //DEIXA OCULTO
   dadosCandidato.classList.add("oculto");
   dadosNulo.classList.add("oculto");
   divFoto.classList.add("oculto");
   espacoErro.classList.add("oculto");
 }
-
-branco();
-confirma();
 
 function limpar() {
   contador = 0;
@@ -118,4 +129,14 @@ function limpar() {
   digito.forEach((span) => {
     span.innerHTML = "";
   });
+}
+
+branco();
+confirma();
+
+function abortar() {
+  if (contador === 0) {
+  } else {
+    controller.abort();
+  }
 }
