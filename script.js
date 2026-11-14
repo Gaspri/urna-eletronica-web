@@ -20,9 +20,11 @@ let contador = 0;
 
 function branco() {
   btnBranco.addEventListener("click", () => {
+    if (voto !== "") {
+      return;
+    }
     voto = "branco";
     ocultar();
-    abortar();
     limpar();
     espacoErro.classList.remove("oculto");
     dadosNulo.classList.add("oculto");
