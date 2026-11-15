@@ -24,7 +24,7 @@ function branco() {
     if (voto !== "") {
       return;
     }
-    voto = "branco";
+    voto = "BRANCO";
     ocultar();
     limpar();
     espacoErro.classList.remove("oculto");
@@ -35,7 +35,7 @@ function branco() {
 
 function votoNulo() {
   ocultar();
-  voto = "nulo";
+  voto = "NULO";
   dadosNulo.classList.remove("oculto");
 }
 
@@ -51,10 +51,19 @@ function confirma() {
       return;
     }
     statusVoto = true;
+
+    fetch(`receber_voto.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
+      body: JSON.stringify({
+        numero,
+        voto,
+      }),
+    });
+
     fim.classList.remove("oculto");
     display.classList.add("oculto");
     audioConfirma.play();
-    console.log(statusVoto);
   });
 }
 
@@ -66,7 +75,7 @@ button.forEach((element) => {
       return;
     }
     if (digito[contador]) {
-      if (voto === "branco") {
+      if (voto === "BRANCO") {
         return;
       }
 
@@ -95,7 +104,7 @@ button.forEach((element) => {
               partido.textContent = candidato.partido;
               foto.alt = candidato.nome;
               foto.src = "assets/" + candidato.foto;
-              voto = "valido";
+              voto = "VALIDO";
               mostrar();
             }
           })
