@@ -91,6 +91,10 @@ button.forEach((element) => {
           signal: controller.signal,
         })
           .then((response) => {
+            if (response.status === 404) {
+              return { status: "erro" };
+            }
+
             if (!response.ok) {
               throw new Error(`HTTP erro! ${response.status}`);
             }

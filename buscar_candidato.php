@@ -16,8 +16,10 @@ $stmtCandidato->execute(array(
 if ($stmtCandidato->rowCount() > 0) {
     $resultCandidato = $stmtCandidato->fetch(PDO::FETCH_ASSOC);
     $resultCandidato = new Candidato(...$resultCandidato);
+    http_response_code(200);
     echo json_encode($resultCandidato);
 } else {
+    http_response_code(404);
     echo json_encode(array(
         "status" => "erro"
     ));
